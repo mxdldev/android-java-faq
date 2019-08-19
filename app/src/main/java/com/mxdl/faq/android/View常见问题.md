@@ -41,6 +41,7 @@ View的绘制过程遵循如下几步：
 * b.绘制自己（onDraw）
 * c.绘制children（dispatchDraw） 
 * d.绘制装饰（onDrawScrollBars）
+
 View绘制过程的传递是通过dispatchDraw来实现的，它会遍历所有的子元素的draw方法，如此draw事件就一层一层的传递下去了
 ps：view有一个特殊的方法setWillNotDraw，如果一个view不需要绘制内容，即不需要重写onDraw方法绘制，可以开启这个标记，系统会进行相应的优化。默认情况下，View没有开启这个标记，默认认为需要实现onDraw方法绘制，当我们继承ViewGroup实现自定义控件，并且明确知道不需要具备绘制功能时，可以开启这个标记，如果我们重写了onDraw,那么要显示的关闭这个标记
 ### 5.子view宽高可以超过父view？
@@ -51,7 +52,7 @@ ps：view有一个特殊的方法setWillNotDraw，如果一个view不需要绘�
 * 3.对父布局还有要求，要求使用linearLayout(反正我用RelativeLayout是不行)。你如果必须用其他布局可以在需要超出的view上面套一个linearLayout
 外面再套其他的布局。 
 * 4.最外面的布局如果设置的padding 不能超出
-### 5.自定义view需要注意的几点
+### 6.自定义view需要注意的几点
 * 1.让view支持wrap_content属性，在onMeasure方法中针对AT_MOST模式做专门处理，否则wrap_content会和match_parent效果一样（继承ViewGroup也同样要在onMeasure中做这个判断处理）
 ```
 if (widthMeasureSpec == MeasureSpec.AT_MOST && heightMeasureSpec ==	MeasureSpec.AT_MOST) {
