@@ -1,8 +1,8 @@
 ### 1.四大组件是什么
-* (1) Activity是整个应用程序的门面，主要负责应用程序当中数据的展示，是各种各样控件的容器，是用户和应用程序之间交互的接口（美女）
-* (2) Service在前台不可见，但是承担大部分数据处理工作，它和Activity的地位是并列的，区别在于Activity运行于前台，Service运行于后台，没有图形用户界面，通常他为其他的组件提供后台服务或监控其他组件的运行状态,适合执行不需要和用户交互且需要长期运行的任务（劳模）
-* (3) ContentProvider：为不同的应用程序之间数据访问提供统一的访问接口，通常它与ContentResolver结合使用，一个是应用程序使用ContentProvider来暴露自己的数据，而另外一个是应用程序通过ContentResolver来访问数据（国家档案馆）
-* (4) Broadcast Receiver: 实现消息的异步接收，他非常类似事件编程中的监听器，但他与普通事件监听器有所不同，普通的事件监听器监听的事件源是程序中的控件，而BroadcastReceiver监听的事件源是Android应用中其他的组件（国家监察局）
+* (1)Activity是整个应用程序的门面，主要负责应用程序当中数据的展示，是各种各样控件的容器，是用户和应用程序之间交互的接口（美女）
+* (2)Service在前台不可见，但是承担大部分数据处理工作，它和Activity的地位是并列的，区别在于Activity运行于前台，Service运行于后台，没有图形用户界面，通常他为其他的组件提供后台服务或监控其他组件的运行状态,适合执行不需要和用户交互且需要长期运行的任务（劳模）
+* (3)ContentProvider：为不同的应用程序之间数据访问提供统一的访问接口，通常它与ContentResolver结合使用，一个是应用程序使用ContentProvider来暴露自己的数据，而另外一个是应用程序通过ContentResolver来访问数据（国家档案馆）
+* (4)Broadcast Receiver: 实现消息的异步接收，他非常类似事件编程中的监听器，但他与普通事件监听器有所不同，普通的事件监听器监听的事件源是程序中的控件，而BroadcastReceiver监听的事件源是Android应用中其他的组件（国家监察局）
 >内容提供者，使一个应用程序的指定数据集它提供了一种跨进程数据共享的方式，当数据被修改后，ContentResolver接口的notifyChange函数通知那些注册监控特定URI的ContentObserver对象。
 如果ContentProvider和调用者在同一进程中，ContentProvider的方法(query/insert/update/delete等)和调用者在同一线程中；如果ContentProvider和调用者不在同一进程，ContentProvider方法会运行在它自身进程的一个Binder线程中。
 ### 2.四大组件的生命周期和简单用法
@@ -26,11 +26,11 @@ onCreate()->onStart()->onResume()->onPause()->onStop()->onDestory()
 ##### (4) ContentProvider
 应该和应用的生命周期一样，它属于系统应用，应用启动时，它会跟着初始化，应用关闭或被杀，它会跟着结束。
 ### 3.Activity之间的通信方式
-* (1) 通过Intent方式传递参数跳转
-* (2) 通过广播方式
-* (3) 通过接口回调方式
-* (4) 借助类的静态变量或全局变量
-* (5) 借助SharedPreference或是外部存储，如数据库或本地文件
+* (1)通过Intent方式传递参数跳转
+* (2)通过广播方式
+* (3)通过接口回调方式
+* (4)借助类的静态变量或全局变量
+* (5)借助SharedPreference或是外部存储，如数据库或本地文件
 
 ### 4.Activity各种情况下的生命周期
 * 两个Activity(A->B)切换(B正常的Activity)的生命周期：onPause(A)->onCreate(B)->onStart(B)->onResume(B)->oStop(A)
@@ -63,13 +63,13 @@ AlertDialog并不会影响Activity的生命周期，按Home键后才会使Activi
 前一个Activity的onPause，后一个Activity的onResume
 
 ### 9.前台切换到后台，然后再回到前台，Activity生命周期回调方法。弹出Dialog，生命值周期回调方法。
-* (1) 前台切换到后台，会执行onPause->onStop，再回到前台，会执行onRestart->onStart->onResume
-* (2) 弹出Dialog，并不会影响Activity生命周期
+* (1)前台切换到后台，会执行onPause->onStop，再回到前台，会执行onRestart->onStart->onResume
+* (2)弹出Dialog，并不会影响Activity生命周期
 ### 10.Activity的四种启动模式对比
-* (1) standard：标准启动模式（默认），每启动一次Activity，都会创建一个实例，即使从ActivityA startActivity ActivityA,也会再次创建A的实例放于栈顶，当回退时，回到上一个ActivityA的实例。
-* (2) singleTop：栈顶复用模式，每次启动Activity，如果待启动的Activity位于栈顶，则不会重新创建Activity的实例，即不会走onCreate->onStart，会直接进入Activity的onPause->onNewIntent->onResume方法
-* (3) singleInstance: 单一实例模式，整个手机操作系统里只有一个该Activity实例存在，没有其他Actvity,后续请求均不会创建新的Activity。若task中存在实例，执行实例的onNewIntent()。应用场景：闹钟、浏览器、电话
-* (4) singleTask：栈内复用，启动的Activity如果在指定的taskAffinity的task栈中存在相应的实例，则会把它上面的Activity都出栈，直到当前Activity实例位于栈顶，执行相应的onNewIntent()方法。如果指定的task不存在，创建指定的taskAffinity的task,taskAffinity的作用，进入指写taskAffinity的task,如果指定的task存在，将task移到前台，如果指定的task不存在，创建指定的taskAffinity的task. 应用场景：应用的主页面
+* (1)standard：标准启动模式（默认），每启动一次Activity，都会创建一个实例，即使从ActivityA startActivity ActivityA,也会再次创建A的实例放于栈顶，当回退时，回到上一个ActivityA的实例。
+* (2)singleTop：栈顶复用模式，每次启动Activity，如果待启动的Activity位于栈顶，则不会重新创建Activity的实例，即不会走onCreate->onStart，会直接进入Activity的onPause->onNewIntent->onResume方法
+* (3)singleInstance: 单一实例模式，整个手机操作系统里只有一个该Activity实例存在，没有其他Actvity,后续请求均不会创建新的Activity。若task中存在实例，执行实例的onNewIntent()。应用场景：闹钟、浏览器、电话
+* (4)singleTask：栈内复用，启动的Activity如果在指定的taskAffinity的task栈中存在相应的实例，则会把它上面的Activity都出栈，直到当前Activity实例位于栈顶，执行相应的onNewIntent()方法。如果指定的task不存在，创建指定的taskAffinity的task,taskAffinity的作用，进入指写taskAffinity的task,如果指定的task存在，将task移到前台，如果指定的task不存在，创建指定的taskAffinity的task. 应用场景：应用的主页面
 ### 11.Activity状态保存于恢复
 * Activity被主动回收时，如按下Back键，系统不会保存它的状态，只有被动回收时，虽然这个Activity实例已被销毁，但系统在新建一个Activity实例时，会带上先前被回收Activity的信息。在当前Activity被销毁前调用onSaveInstanceState(onPause和onStop之间保存)，重新创建Activity后会在onCreate后调用onRestoreInstanceState（onStart和onResume之间被调用），它们的参数Bundle用来数据保存和读取的。
 * 保存View状态有两个前提：View的子类必须实现了onSaveInstanceState; 必须要设定Id，这个ID作为Bundle的Key
@@ -103,15 +103,15 @@ c)在Fragment2中实现该接口；
 ### 19.请描述一下广播BroadcastReceiver的理解
 BroadcastReceiver是一种全局监听器，用来实现系统中不同组件之间的通信。有时候也会用来作为传输少量而且发送频率低的数据，但是如果数据的发送频率比较高或者数量比较大就不建议用广播接收者来接收了，因为这样的效率很不好，因为BroadcastReceiver接收数据的开销还是比较大的。
 ### 20.广播的分类
-* (1) 普通广播：完全异步的，可以在同一时刻（逻辑上）被所有接收者接收到，消息传递的效率比较高，并且无法中断广播的传播。
-* (2) 有序广播：发送有序广播后，广播接收者将按预先声明的优先级依次接收Broadcast。优先级高的优先接收到广播，而在其onReceiver()执行过程中，广播不会传播到下一个接收者，此时当前的广播接收者可以abortBroadcast()来终止广播继续向下传播，也可以将intent中的数据进行修改设置，然后将其传播到下一个广播接收者。 sendOrderedBroadcast(intent, null);//发送有序广播
-* (3) 粘性广播：sendStickyBroadcast()来发送该类型的广播信息，这种的广播的最大特点是，当粘性广播发送后，最后的一个粘性广播会滞留在操作系统中。如果在粘性广播发送后的一段时间里，如果有新的符合广播的动态注册的广播接收者注册，将会收到这个广播消息，虽然这个广播是在广播接收者注册之前发送的，另外一点，对于静态注册的广播接收者来说，这个等同于普通广播。
+* (1)普通广播：完全异步的，可以在同一时刻（逻辑上）被所有接收者接收到，消息传递的效率比较高，并且无法中断广播的传播。
+* (2)有序广播：发送有序广播后，广播接收者将按预先声明的优先级依次接收Broadcast。优先级高的优先接收到广播，而在其onReceiver()执行过程中，广播不会传播到下一个接收者，此时当前的广播接收者可以abortBroadcast()来终止广播继续向下传播，也可以将intent中的数据进行修改设置，然后将其传播到下一个广播接收者。 sendOrderedBroadcast(intent, null);//发送有序广播
+* (3)粘性广播：sendStickyBroadcast()来发送该类型的广播信息，这种的广播的最大特点是，当粘性广播发送后，最后的一个粘性广播会滞留在操作系统中。如果在粘性广播发送后的一段时间里，如果有新的符合广播的动态注册的广播接收者注册，将会收到这个广播消息，虽然这个广播是在广播接收者注册之前发送的，另外一点，对于静态注册的广播接收者来说，这个等同于普通广播。
 
 ### 21.广播使用的方式和场景
-* (1) App全局监听：在AndroidManifest中静态注册的广播接收器，一般我们在收到该消息后，需要做一些相应的动作，而这些动作与当前App的组件，比如Activity或者Service的是否运行无关，比如我们在集成第三方Push SDK时，一般都会添加一个静态注册的BroadcastReceiver来监听Push消息，当有Push消息过来时，会在后台做一些网络请求或者发送通知等等。
-* (2) 组件局部监听：这种主要是在Activity或者Service中使用registerReceiver()动态注册的广播接收器，因为当我们收到一些特定的消息，比如网络连接发生变化时，我们可能需要在当前Activity页面给用户一些UI上的提示，或者将Service中的网络请求任务暂停。所以这种动态注册的广播接收器适合特定组件的特定消息处理。
+* (1)App全局监听：在AndroidManifest中静态注册的广播接收器，一般我们在收到该消息后，需要做一些相应的动作，而这些动作与当前App的组件，比如Activity或者Service的是否运行无关，比如我们在集成第三方Push SDK时，一般都会添加一个静态注册的BroadcastReceiver来监听Push消息，当有Push消息过来时，会在后台做一些网络请求或者发送通知等等。
+* (2)组件局部监听：这种主要是在Activity或者Service中使用registerReceiver()动态注册的广播接收器，因为当我们收到一些特定的消息，比如网络连接发生变化时，我们可能需要在当前Activity页面给用户一些UI上的提示，或者将Service中的网络请求任务暂停。所以这种动态注册的广播接收器适合特定组件的特定消息处理。
 ### 22.在manifest 和代码中如何注册和使用BroadcastReceiver?
-* (1) mainfest中注册:静态注册的广播接收者就是一个常驻在系统中的全局监听器，也就是说如果你应用中配置了一个静态的BroadcastReceiver，而且你安装了应用而无论应用是否处于运行状态，广播接收者都是已经常驻在系统中了。
+* (1)mainfest中注册:静态注册的广播接收者就是一个常驻在系统中的全局监听器，也就是说如果你应用中配置了一个静态的BroadcastReceiver，而且你安装了应用而无论应用是否处于运行状态，广播接收者都是已经常驻在系统中了。
 ```
 <receiver android:name=".MyBroadcastReceiver">
     <intent-filter>
@@ -119,7 +119,7 @@ BroadcastReceiver是一种全局监听器，用来实现系统中不同组件之
     </intent-filter>
 </receiver>
 ```
-* (2) 动态注册:动态注册的广播接收者只有执行了registerReceiver(receiver, filter)才会开始监听广播消息，并对广播消息作为相应的处理。
+* (2)动态注册:动态注册的广播接收者只有执行了registerReceiver(receiver, filter)才会开始监听广播消息，并对广播消息作为相应的处理。
 ```
 IntentFilter fiter = new IntentFilter("com.smilexie.test.intent.mybroadcastreceiver");
 MyBroadcastReceiver receiver = new MyBroadcastReceiver();
@@ -130,20 +130,20 @@ registerReceiver(receiver, filter);
 unregisterReceiver(receiver);
 ```
 ### 23.本地广播和全局广播有什么差别？
-* (1) LocalBroadcastReceiver仅在自己的应用内发送接收广播，也就是只有自己的应用能收到，数据更加安全。广播只在这个程序里，而且效率更高。只能动态注册，在发送和注册的时候采用LocalBroadcastManager的sendBroadcast方法和registerReceiver方法。
-* (2) 全局广播：发送的广播事件可被其他应用程序获取，也能响应其他应用程序发送的广播事件（可以通过 exported–是否监听其他应用程序发送的广播 在清单文件中控制） 全局广播既可以动态注册，也可以静态注册。
+* (1)LocalBroadcastReceiver仅在自己的应用内发送接收广播，也就是只有自己的应用能收到，数据更加安全。广播只在这个程序里，而且效率更高。只能动态注册，在发送和注册的时候采用LocalBroadcastManager的sendBroadcast方法和registerReceiver方法。
+* (2)全局广播：发送的广播事件可被其他应用程序获取，也能响应其他应用程序发送的广播事件（可以通过 exported–是否监听其他应用程序发送的广播 在清单文件中控制） 全局广播既可以动态注册，也可以静态注册。
 
 ### 24.AlertDialog,popupWindow,Activity区别
-* （1）Popupwindow在显示之前一定要设置宽高，Dialog无此限制。
-* （2）Popupwindow默认不会响应物理键盘的back，除非显示设置了popup.setFocusable(true);而在点击back的时候，Dialog会消失。
-* （3）Popupwindow不会给页面其他的部分添加蒙层，而Dialog会。
-* （4）Popupwindow没有标题，Dialog默认有标题，可以通过dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);取消标题
-* （5）二者显示的时候都要设置Gravity。如果不设置，Dialog默认是Gravity.CENTER。
-* （6）二者都有默认的背景，都可以通过setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));去掉。
-* （7）Popupwindow弹出后，取得了用户操作的响应处理权限，使得其他UI控件不被触发。而AlertDialog弹出后，点击背景，AlertDialog会消失。
+* (1)Popupwindow在显示之前一定要设置宽高，Dialog无此限制。
+* (2)Popupwindow默认不会响应物理键盘的back，除非显示设置了popup.setFocusable(true);而在点击back的时候，Dialog会消失。
+* (3)Popupwindow不会给页面其他的部分添加蒙层，而Dialog会。
+* (4)Popupwindow没有标题，Dialog默认有标题，可以通过dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);取消标题
+* (5)二者显示的时候都要设置Gravity。如果不设置，Dialog默认是Gravity.CENTER。
+* (6)二者都有默认的背景，都可以通过setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));去掉。
+* (7)Popupwindow弹出后，取得了用户操作的响应处理权限，使得其他UI控件不被触发。而AlertDialog弹出后，点击背景，AlertDialog会消失。
 
 ### 25.Application和Activity的Context对象的区别
-* (1）Application Context是伴随应用生命周期；不可以showDialog, startActivity, LayoutInflation
+* (1)Application Context是伴随应用生命周期；不可以showDialog, startActivity, LayoutInflation
 可以startService\BindService\sendBroadcast\registerBroadcast\load Resource values
 * (2)Activity Context指生命周期只与当前Activity有关，而Activity Context这些操作都可以，即凡是跟UI相关的，都得用Activity做为Context来处理。
 一个应用Context的数量=Activity数量+Service数量+1（Application数量）
