@@ -2,7 +2,7 @@
 * (1)Activity是整个应用程序的门面，主要负责应用程序当中数据的展示，是各种各样控件的容器，是用户和应用程序之间交互的接口（美女）
 * (2)Service在前台不可见，但是承担大部分数据处理工作，它和Activity的地位是并列的，区别在于Activity运行于前台，Service运行于后台，没有图形用户界面，通常他为其他的组件提供后台服务或监控其他组件的运行状态,适合执行不需要和用户交互且需要长期运行的任务（劳模）
 * (3)ContentProvider：为不同的应用程序之间数据访问提供统一的访问接口，通常它与ContentResolver结合使用，一个是应用程序使用ContentProvider来暴露自己的数据，而另外一个是应用程序通过ContentResolver来访问数据（国家档案馆）
-* (4)Broadcast Receiver: 实现消息的异步接收，他非常类似事件编程中的监听器，但他与普通事件监听器有所不同，普通的事件监听器监听的事件源是程序中的控件，而BroadcastReceiver监听的事件源是Android应用中其他的组件（国家监察局）
+* (4)Broadcast Receiver: 它是一个全局监听器，用于实现系统中不同组件之间的通信，他非常类似事件编程中的监听器，但他与普通事件监听器有所不同，普通的事件监听器监听的事件源是程序中的控件，而BroadcastReceiver监听的事件源是Android应用中其他的组件（国家监察局）
 >内容提供者，使一个应用程序的指定数据集它提供了一种跨进程数据共享的方式，当数据被修改后，ContentResolver接口的notifyChange函数通知那些注册监控特定URI的ContentObserver对象。
 如果ContentProvider和调用者在同一进程中，ContentProvider的方法(query/insert/update/delete等)和调用者在同一线程中；如果ContentProvider和调用者不在同一进程，ContentProvider方法会运行在它自身进程的一个Binder线程中。
 ### 2.四大组件的生命周期和简单用法
@@ -76,7 +76,7 @@ AlertDialog并不会影响Activity的生命周期，按Home键后才会使Activi
 
 ### 12.fragment各种情况下的生命周期
 正常情况下的生命周期：onAttach->onCreate->onCreateView->onActivityCreated->onStart->onResume->onPause->onStop->onDestoryView->onDestory->onDetach
-* Fragment在Activity中replace  onPause(旧)->onAttach->onCreate->onCreateView->onActivityCreated->onStart->onResume->onStop(旧)->onDestoryView(旧)
+* Fragment在Activity中replace onPause(旧)->onAttach->onCreate->onCreateView->onActivityCreated->onStart->onResume->onStop(旧)->onDestoryView(旧)
 如果添加到backStack中，调用remove()方法fragment的方法会走到onDestoryView，但不会执行onDetach()，即fragment本身的实例是存在的，成员变量也存在，但是view被销毁了。如果新替换的Fragment已在BackStack中，则不会执行onAttach->onCreate
 ### 13.Fragment状态保存onSaveInstanceState是哪个类的方法，在什么情况下使用？
 在对应的FragmentActivity.onSaveInstanceState方法会调用FragmentController.saveAllState，其中会对mActive中各个Fragment的实例状态和View状态分别进行保存.当Activity在做状态保存和恢复的时候, 在它其中的fragment自然也需要做状态保存和恢复.
