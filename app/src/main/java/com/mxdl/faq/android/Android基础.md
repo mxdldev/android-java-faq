@@ -28,9 +28,8 @@ onCreate()->onStart()->onResume()->onPause()->onStop()->onDestory()
 ### 3.Activity之间的通信方式
 * (1)通过Intent方式传递参数跳转
 * (2)通过广播方式
-* (3)通过接口回调方式
-* (4)借助类的静态变量或全局变量
-* (5)借助SharedPreference或是外部存储，如数据库或本地文件
+* (3)借助类的静态变量或全局变量
+* (4)借助SharedPreference或是外部存储，如数据库或本地文件
 
 ### 4.Activity各种情况下的生命周期
 * 两个Activity(A->B)切换(B正常的Activity)的生命周期：onPause(A)->onCreate(B)->onStart(B)->onResume(B)->oStop(A)
@@ -133,7 +132,7 @@ unregisterReceiver(receiver);
 * (1)LocalBroadcastReceiver仅在自己的应用内发送接收广播，也就是只有自己的应用能收到，数据更加安全。广播只在这个程序里，而且效率更高。只能动态注册，在发送和注册的时候采用LocalBroadcastManager的sendBroadcast方法和registerReceiver方法。
 * (2)全局广播：发送的广播事件可被其他应用程序获取，也能响应其他应用程序发送的广播事件（可以通过 exported–是否监听其他应用程序发送的广播 在清单文件中控制） 全局广播既可以动态注册，也可以静态注册。
 
-### 24.AlertDialog,popupWindow,Activity区别
+### 24.AlertDialog,popupWindow区别
 * (1)Popupwindow在显示之前一定要设置宽高，Dialog无此限制。
 * (2)Popupwindow默认不会响应物理键盘的back，除非显示设置了popup.setFocusable(true);而在点击back的时候，Dialog会消失。
 * (3)Popupwindow不会给页面其他的部分添加蒙层，而Dialog会。
