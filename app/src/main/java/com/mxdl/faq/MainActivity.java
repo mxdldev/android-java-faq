@@ -82,13 +82,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 handlerLeak();
                 break;
             case R.id.btn_memory_shake:
-                String str = null;
-                for(int i = 0 ;i < 1000000;i++){
-                    str += String.valueOf(i);
-                }
+                memoryShake();
                 break;
         }
     }
+
+    private void memoryShake() {
+        String str = null;
+        for(int i = 0 ;i < 10000;i++){
+            str += String.valueOf(i);
+            Log.v("MYTAG","str:"+str);
+        }
+    }
+
     @DebugLog
     public void handlerLeak() {
         mMyHandler = new MyHandler();
