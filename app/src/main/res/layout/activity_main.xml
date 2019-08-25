@@ -31,4 +31,11 @@
         android:text="内存抖动"
         android:textAllCaps="false"
         />
+    <Button
+        android:id="@+id/btn_trace_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="方法追踪"
+        android:textAllCaps="false"
+        />
 </LinearLayout>
