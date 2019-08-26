@@ -3,6 +3,7 @@ package com.mxdl.faq;
 import android.Manifest;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.os.Debug;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnHandlerLeak;
     private MyHandler mMyHandler;
     private Button mBtnMemoryShake;
+    private Button mBtnTraceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mBtnMemoryShake = findViewById(R.id.btn_memory_shake);
 
+        mBtnTraceView = findViewById(R.id.btn_trace_view);
+
         mBtnStrictMode.setOnClickListener(this);
         mBtnHuGo.setOnClickListener(this);
         mBtnHandlerLeak.setOnClickListener(this);
         mBtnMemoryShake.setOnClickListener(this);
-
+        mBtnTraceView.setOnClickListener(this);
 
         new RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_hugo:
                 String name = getName("zhang", "san");
-                Log.v("MYTAG","name:"+name);
+                Log.v("MYTAG", "name:" + name);
                 break;
             case R.id.btn_handelr_leak:
                 handlerLeak();
@@ -84,14 +88,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_memory_shake:
                 memoryShake();
                 break;
+            case R.id.btn_trace_view:
+                testTraceView();
+                break;
         }
+    }
+    //https://blog.csdn.net/yinzhijiezhan/article/details/80167283
+    private void testTraceView() {
+        Debug.startMethodTracing("custom");
+        startTrace();
+        Debug.stopMethodTracing();
+    }
+
+    /**
+     * jie1()和jie2()没有调用关系是兄弟关系
+     */
+    private void startTrace() {
+        jie1();
+        jie2();
+    }
+
+    /**
+     * jie2()中两次调用jie3()，其中jie3(0)直接return，不产生递归也不会调用jie4()
+     * jie3(3)会先调用一次jie4()再产生3次递归调用
+     */
+    private void jie2() {
+        jie3(0);
+        jie3(3);
+    }
+
+    private void jie3(int count) {
+        if (count == 3) {
+            jie4();
+        }
+        if (count == 0) {
+            return;
+        } else {
+            jie3(count - 1);
+        }
+    }
+
+    /**
+     * 故意做比较耗时的操作：用于区分Excl和Incl的关系
+     */
+    private void jie4() {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                int k = i + j;
+            }
+        }
+    }
+
+    private void jie1() {
+
     }
 
     private void memoryShake() {
         String str = null;
-        for(int i = 0 ;i < 10000;i++){
+        for (int i = 0; i < 10000; i++) {
             str += String.valueOf(i);
-            Log.v("MYTAG","str:"+str);
+            Log.v("MYTAG", "str:" + str);
         }
     }
 
@@ -100,31 +156,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMyHandler = new MyHandler();
         Message obtain = Message.obtain();
         obtain.arg1 = 1000;
-        mMyHandler.sendMessageDelayed(obtain,1000 * 10);
+        mMyHandler.sendMessageDelayed(obtain, 1000 * 10);
     }
+
     //非静态内部类导致的内存泄漏
-    class MyHandler extends Handler{
+    class MyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.v("MYTAG","arg1"+msg.arg1);
+            Log.v("MYTAG", "arg1" + msg.arg1);
         }
     }
+
     //HuGo测试
     @DebugLog
     public String getName(String first, String last) {
         SystemClock.sleep(15); // Don't ever really do this!
         return first + " " + last;
     }
+
     //严格模式测试StrickMode
     public void writeFile() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 File externalStorage = Environment.getExternalStorageDirectory();
                 File destFile = new File(externalStorage, "dest111333.txt");
                 try {
-                    if(!destFile.exists()){
+                    if (!destFile.exists()) {
                         destFile.createNewFile();
                     }
                     OutputStream output = new FileOutputStream(destFile, true);
