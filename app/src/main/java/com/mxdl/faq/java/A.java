@@ -1,6 +1,9 @@
 package com.mxdl.faq.java;
 
+import android.app.Service;
+import android.content.Intent;
 import android.os.Build;
+import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v4.util.SimpleArrayMap;
 import android.util.ArrayMap;
@@ -27,9 +30,21 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
  * Version:     V1.0.0<br>
  * Update:     <br>
  */
-public class A {
+public class A extends Service {
     int a;
     public A(){}
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        //startForegroundService(new Intent(this,));
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
     public A(int a){
         this.a = a;
     }
