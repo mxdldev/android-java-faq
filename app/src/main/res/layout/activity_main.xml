@@ -38,4 +38,16 @@
         android:text="方法追踪"
         android:textAllCaps="false"
         />
+    <TextView
+        android:id="@+id/txt_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="111"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="1000dp"
+        android:text="Button"
+        />
 </LinearLayout>
