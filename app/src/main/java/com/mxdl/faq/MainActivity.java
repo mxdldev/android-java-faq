@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTxtContent = findViewById(R.id.txt_content);
 
         Intent intent ;
+
     }
 
     @Override

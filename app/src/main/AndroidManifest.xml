@@ -19,6 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service android:name=".service.TestService"
+            android:permission="com.read.com"
+            />
     </application>
 
 </manifest>

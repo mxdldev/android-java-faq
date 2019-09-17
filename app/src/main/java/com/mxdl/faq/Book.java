@@ -1,7 +1,9 @@
 package com.mxdl.faq;
 
+import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.RemoteCallbackList;
 
 /**
  * Description: <Book><br>
@@ -11,21 +13,29 @@ import android.os.Parcelable;
  * Update:     <br>
  */
 class Book implements Parcelable {
+
+    RemoteCallbackList mCallbackList;
     private int id;
     private String name;
-
+    static int value = 1;
     @Override
     public int describeContents() {
         return 0;
     }
-
+    static void setView(int v){
+        value = v;
+    }
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeString(this.name);
+
+        //mCallbackList.unregister()
     }
 
     public Book() {
+        //Handler handler;
+        //handler.obtainMessage(1,"aaaa").sendToTarget();
     }
 
     protected Book(Parcel in) {
