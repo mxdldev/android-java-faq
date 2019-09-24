@@ -31,7 +31,9 @@ dependencies {
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
 }
 //hugo {
 //    enabled false
 //}
+

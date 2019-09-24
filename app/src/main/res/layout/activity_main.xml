@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+              android:orientation="vertical">
+
     <Button
         android:id="@+id/btn_strick_mode"
         android:layout_width="match_parent"
@@ -10,6 +11,7 @@
         android:text="StrickModeTest"
         android:textAllCaps="false"
         />
+
     <Button
         android:id="@+id/btn_hugo"
         android:layout_width="match_parent"
@@ -17,6 +19,7 @@
         android:text="HuGoTest"
         android:textAllCaps="false"
         />
+
     <Button
         android:id="@+id/btn_handelr_leak"
         android:layout_width="match_parent"
@@ -24,6 +27,7 @@
         android:text="Handler导致的Activity泄漏"
         android:textAllCaps="false"
         />
+
     <Button
         android:id="@+id/btn_memory_shake"
         android:layout_width="match_parent"
@@ -31,6 +35,7 @@
         android:text="内存抖动"
         android:textAllCaps="false"
         />
+
     <Button
         android:id="@+id/btn_trace_view"
         android:layout_width="match_parent"
@@ -38,16 +43,56 @@
         android:text="方法追踪"
         android:textAllCaps="false"
         />
+
+    <Button
+        android:id="@+id/btn_my_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="滑动冲突"
+        android:textAllCaps="true"
+        />
+
+    <Button
+        android:id="@+id/btn_my_scroll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="滑动冲突1"
+        android:textAllCaps="true"
+        />
     <TextView
-        android:id="@+id/txt_content"
+        android:id="@+id/txt_hello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="111"
+        android:text="hello world"
         />
-    <Button
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1000dp"
-        android:text="Button"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.mxdl.faq.view.FollowText
+            android:id="@+id/btn_"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="跟随文字"
+            />
+
+        <com.mxdl.faq.view.FollowText
+            android:id="@+id/btn1_"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="跟随文字"
+            />
+
+        <com.mxdl.faq.view.FollowText
+            android:id="@+id/btn2_"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="跟随文字"
+            />
+    </LinearLayout>
 </LinearLayout>

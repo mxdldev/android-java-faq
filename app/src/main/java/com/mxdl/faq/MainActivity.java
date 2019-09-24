@@ -1,28 +1,24 @@
 package com.mxdl.faq;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Debug;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mxdl.faq.preformance.StrictModeActivity;
+import com.mxdl.faq.view.ScrollViewPagerActivity;
+import com.mxdl.faq.view.ScrollViewPagerActivity1;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -49,8 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyHandler mMyHandler;
     private Button mBtnMemoryShake;
     private Button mBtnTraceView;
-    private TextView mTxtContent;
-
+    private Button mBtnScroll;
+    private Button mBtnScroll1;
+    private TextView mTxtHello;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +59,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnMemoryShake = findViewById(R.id.btn_memory_shake);
 
         mBtnTraceView = findViewById(R.id.btn_trace_view);
+        mTxtHello = findViewById(R.id.txt_hello);
+        mBtnScroll = findViewById(R.id.btn_my_scroll);
+        mBtnScroll1 = findViewById(R.id.btn_my_scroll1);
 
         mBtnStrictMode.setOnClickListener(this);
         mBtnHuGo.setOnClickListener(this);
         mBtnHandlerLeak.setOnClickListener(this);
         mBtnMemoryShake.setOnClickListener(this);
         mBtnTraceView.setOnClickListener(this);
+        mBtnScroll.setOnClickListener(this);
+        mBtnScroll1.setOnClickListener(this);
 
         new RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
@@ -78,12 +80,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        mTxtContent = findViewById(R.id.txt_content);
 
-        MotionEvent motionEvent = null;
-        float x = motionEvent.getX();
-        float y = motionEvent.getY();
-        float rawX = motionEvent.getRawX();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
     }
 
     @Override
@@ -111,8 +118,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_trace_view:
                 testTraceView();
                 break;
+            case R.id.btn_my_scroll:
+                startActivity(new Intent(this, ScrollViewPagerActivity.class));
+                break;
+            case R.id.btn_my_scroll1:
+                startActivity(new Intent(this, ScrollViewPagerActivity1.class));
+                break;
         }
     }
+
     //https://blog.csdn.net/yinzhijiezhan/article/details/80167283
     private void testTraceView() {
         Debug.startMethodTracing("custom");
