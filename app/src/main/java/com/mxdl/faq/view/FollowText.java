@@ -79,4 +79,9 @@ public class FollowText extends TextView {
         return true;
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+    }
 }

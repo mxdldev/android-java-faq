@@ -59,10 +59,30 @@
         android:text="滑动冲突1"
         android:textAllCaps="true"
         />
+    <Button
+        android:id="@+id/btn_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="位置测试"
+        />
+    <Button
+        android:id="@+id/btn_cricle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义View测试"
+        />
+    <Button
+        android:id="@+id/btn_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="window测试"
+        />
+
     <TextView
         android:id="@+id/txt_hello"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:gravity="bottom"
         android:text="hello world"
         />
 

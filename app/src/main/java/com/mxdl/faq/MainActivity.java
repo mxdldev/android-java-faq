@@ -1,24 +1,39 @@
 package com.mxdl.faq;
 
 import android.Manifest;
+import android.animation.IntEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.NinePatchDrawable;
 import android.os.Debug;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mxdl.faq.view.CricleActivity;
+import com.mxdl.faq.view.PositionViewActivity;
 import com.mxdl.faq.view.ScrollViewPagerActivity;
 import com.mxdl.faq.view.ScrollViewPagerActivity1;
+import com.mxdl.faq.view.WindowTest;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -48,6 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnScroll;
     private Button mBtnScroll1;
     private TextView mTxtHello;
+    private Button mBtnPositon;
+    private Button mBtnCricle;
+    private IntEvaluator mEvaluator = new IntEvaluator();
+    private Button mBtnWindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTxtHello = findViewById(R.id.txt_hello);
         mBtnScroll = findViewById(R.id.btn_my_scroll);
         mBtnScroll1 = findViewById(R.id.btn_my_scroll1);
+        mBtnPositon = findViewById(R.id.btn_position);
+        mBtnCricle = findViewById(R.id.btn_cricle);
+        mBtnWindow = findViewById(R.id.btn_window);
 
         mBtnStrictMode.setOnClickListener(this);
         mBtnHuGo.setOnClickListener(this);
@@ -70,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnTraceView.setOnClickListener(this);
         mBtnScroll.setOnClickListener(this);
         mBtnScroll1.setOnClickListener(this);
+        mBtnPositon.setOnClickListener(this);
+        mBtnCricle.setOnClickListener(this);
+        mBtnWindow.setOnClickListener(this);
 
         new RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
@@ -79,7 +105,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
+//        ValueAnimator valueAnimator = ValueAnimator.ofObject(new TypeEvaluator<Float>() {
+//            @Override
+//            public Float evaluate(float fraction, Float startValue, Float endValue) {
+//                float v = startValue + fraction * (endValue - startValue);
+//                Log.v("MYTAG","v:"+v);
+//                return v;
+//            }
+//        },1f,100f);
+//        valueAnimator.setInterpolator(new LinearInterpolator());
+//        valueAnimator.setDuration(1000 * 5);
+//        valueAnimator.start();
+//        ObjectAnimator.ofFloat(new Object(),"abc",1,2).start();
 
     }
 
@@ -124,6 +161,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_my_scroll1:
                 startActivity(new Intent(this, ScrollViewPagerActivity1.class));
                 break;
+            case R.id.btn_position:
+                startActivity(new Intent(this, PositionViewActivity.class));
+                break;
+            case R.id.btn_cricle:
+                startActivity(new Intent(MainActivity.this, CricleActivity.class));
+                break;
+            case R.id.btn_window:
+                startActivity(new Intent(MainActivity.this, WindowTest.class));
+                break;
         }
     }
 
@@ -132,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Debug.startMethodTracing("custom");
         startTrace();
         Debug.stopMethodTracing();
+
     }
 
     /**
