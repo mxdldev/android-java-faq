@@ -30,9 +30,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mxdl.faq.view.CricleActivity;
+import com.mxdl.faq.view.HorizontalScrollView;
+import com.mxdl.faq.view.HorizontalScrollViewActivity;
 import com.mxdl.faq.view.PositionViewActivity;
 import com.mxdl.faq.view.ScrollViewPagerActivity;
 import com.mxdl.faq.view.ScrollViewPagerActivity1;
+import com.mxdl.faq.view.ViewPagerActivity;
 import com.mxdl.faq.view.WindowTest;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -67,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnCricle;
     private IntEvaluator mEvaluator = new IntEvaluator();
     private Button mBtnWindow;
+    private Button mBtnViewPager;
+    private Button mBtnHorizontalView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnPositon = findViewById(R.id.btn_position);
         mBtnCricle = findViewById(R.id.btn_cricle);
         mBtnWindow = findViewById(R.id.btn_window);
+        mBtnViewPager = findViewById(R.id.btn_viewpager);
+        mBtnHorizontalView = findViewById(R.id.btn_horizontal_view);
 
         mBtnStrictMode.setOnClickListener(this);
         mBtnHuGo.setOnClickListener(this);
@@ -96,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnPositon.setOnClickListener(this);
         mBtnCricle.setOnClickListener(this);
         mBtnWindow.setOnClickListener(this);
+        mBtnViewPager.setOnClickListener(this);
+        mBtnHorizontalView.setOnClickListener(this);
 
         new RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
@@ -169,6 +178,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_window:
                 startActivity(new Intent(MainActivity.this, WindowTest.class));
+                break;
+            case R.id.btn_viewpager:
+                startActivity(new Intent(MainActivity.this, ViewPagerActivity.class));
+                break;
+            case R.id.btn_horizontal_view:
+                startActivity(new Intent(MainActivity.this, HorizontalScrollViewActivity.class));
                 break;
         }
     }

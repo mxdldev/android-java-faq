@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -44,7 +45,13 @@ public class PositionViewActivity extends AppCompatActivity implements View.OnCl
 
             }
         });
-
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        int cacheMemory = maxMemory/8;
+        LruCache<String,String> lruCache = new LruCache<>(cacheMemory);
+        lruCache.put("a","a");
+        lruCache.remove("a");
+        String a = lruCache.get("a");
+        //DiskLruCache diskLruCache;
     }
 
     @Override

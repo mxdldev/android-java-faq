@@ -19,6 +19,8 @@ import android.widget.Button;
 
 import com.mxdl.faq.R;
 
+import java.util.HashSet;
+
 public class WindowTest extends AppCompatActivity implements View.OnTouchListener {
 
     private static final String TAG = "TestActivity";
@@ -47,6 +49,7 @@ public class WindowTest extends AppCompatActivity implements View.OnTouchListene
 
 
         IntentService intentService;
+
     }
 
     private void initView() {
