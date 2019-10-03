@@ -25,6 +25,7 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
 
     private Scroller mScroller;
     private VelocityTracker mVelocityTracker;
+    private int mChildCount;
 
     public HorizontalScrollViewEx2(Context context) {
         super(context);
@@ -37,7 +38,7 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
     }
 
     public HorizontalScrollViewEx2(Context context, AttributeSet attrs,
-            int defStyle) {
+                                   int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -53,16 +54,18 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
         int y = (int) event.getY();
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN) {
-            mLastX = x;
-            mLastY = y;
-            if (!mScroller.isFinished()) {
-                mScroller.abortAnimation();
-                return true;
-            }
+//            mLastX = x;
+//            mLastY = y;
+//            if (!mScroller.isFinished()) {
+//                mScroller.abortAnimation();
+//                return true;
+//            }
+            Log.v(TAG,"onInterceptTouchEvent Intercept false");
             return false;
         } else {
-            return true;
-        }
+            Log.v(TAG,"onInterceptTouchEvent Intercept true");
+        return true;
+    }
     }
 
     @Override
@@ -72,39 +75,39 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
         int x = (int) event.getX();
         int y = (int) event.getY();
         switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN: {
-            if (!mScroller.isFinished()) {
-                mScroller.abortAnimation();
+            case MotionEvent.ACTION_DOWN: {
+                if (!mScroller.isFinished()) {
+                    mScroller.abortAnimation();
+                }
+                break;
             }
-            break;
-        }
-        case MotionEvent.ACTION_MOVE: {
-            int deltaX = x - mLastX;
-            int deltaY = y - mLastY;
-            Log.d(TAG, "move, deltaX:" + deltaX + " deltaY:" + deltaY);
-            scrollBy(-deltaX, 0);
-            break;
-        }
-        case MotionEvent.ACTION_UP: {
-            int scrollX = getScrollX();
-            int scrollToChildIndex = scrollX / mChildWidth;
-            Log.d(TAG, "current index:" + scrollToChildIndex);
-            mVelocityTracker.computeCurrentVelocity(1000);
-            float xVelocity = mVelocityTracker.getXVelocity();
-            if (Math.abs(xVelocity) >= 50) {
-                mChildIndex = xVelocity > 0 ? mChildIndex - 1 : mChildIndex + 1;
-            } else {
-                mChildIndex = (scrollX + mChildWidth / 2) / mChildWidth;
+            case MotionEvent.ACTION_MOVE: {
+                int deltaX = x - mLastX;
+                int deltaY = y - mLastY;
+                Log.d(TAG, "onTouchEvent move, deltaX:" + deltaX + " deltaY:" + deltaY);
+                scrollBy(-deltaX, 0);
+                break;
             }
-            mChildIndex = Math.max(0, Math.min(mChildIndex, mChildrenSize - 1));
-            int dx = mChildIndex * mChildWidth - scrollX;
-            smoothScrollBy(dx, 0);
-            mVelocityTracker.clear();
-            Log.d(TAG, "index:" + scrollToChildIndex + " dx:" + dx);
-            break;
-        }
-        default:
-            break;
+            case MotionEvent.ACTION_UP: {
+                int scrollX = getScrollX();
+                int scrollToChildIndex = scrollX / mChildWidth;
+                Log.d(TAG, "onTouchEvent current index:" + scrollToChildIndex);
+                mVelocityTracker.computeCurrentVelocity(1000);
+                float xVelocity = mVelocityTracker.getXVelocity();
+                if (Math.abs(xVelocity) >= 50) {
+                    mChildIndex = xVelocity > 0 ? mChildIndex - 1 : mChildIndex + 1;
+                } else {
+                    mChildIndex = (scrollX + mChildWidth / 2) / mChildWidth;
+                }
+                mChildIndex = Math.max(0, Math.min(mChildIndex, mChildrenSize - 1));
+                int dx = mChildIndex * mChildWidth - scrollX;
+                smoothScrollBy(dx, 0);
+                mVelocityTracker.clear();
+                Log.d(TAG, "onTouchEvent index:" + scrollToChildIndex + " dx:" + dx);
+                break;
+            }
+            default:
+                break;
         }
 
         mLastX = x;
@@ -117,14 +120,14 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int measuredWidth = 0;
         int measuredHeight = 0;
-        final int childCount = getChildCount();
+        mChildCount = getChildCount();
         measureChildren(widthMeasureSpec, heightMeasureSpec);
 
         int widthSpaceSize = MeasureSpec.getSize(widthMeasureSpec);
         int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightSpaceSize = MeasureSpec.getSize(heightMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
-        if (childCount == 0) {
+        if (mChildCount == 0) {
             setMeasuredDimension(0, 0);
         } else if (heightSpecMode == MeasureSpec.AT_MOST) {
             final View childView = getChildAt(0);
@@ -132,11 +135,11 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
             setMeasuredDimension(widthSpaceSize, childView.getMeasuredHeight());
         } else if (widthSpecMode == MeasureSpec.AT_MOST) {
             final View childView = getChildAt(0);
-            measuredWidth = childView.getMeasuredWidth() * childCount;
+            measuredWidth = childView.getMeasuredWidth() * mChildCount;
             setMeasuredDimension(measuredWidth, heightSpaceSize);
         } else {
             final View childView = getChildAt(0);
-            measuredWidth = childView.getMeasuredWidth() * childCount;
+            measuredWidth = childView.getMeasuredWidth() * mChildCount;
             measuredHeight = childView.getMeasuredHeight();
             setMeasuredDimension(measuredWidth, measuredHeight);
         }
@@ -146,10 +149,8 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.d(TAG, "width:" + getWidth());
         int childLeft = 0;
-        final int childCount = getChildCount();
-        mChildrenSize = childCount;
 
-        for (int i = 0; i < childCount; i++) {
+        for (int i = 0; i < mChildCount; i++) {
             final View childView = getChildAt(i);
             if (childView.getVisibility() != View.GONE) {
                 final int childWidth = childView.getMeasuredWidth();

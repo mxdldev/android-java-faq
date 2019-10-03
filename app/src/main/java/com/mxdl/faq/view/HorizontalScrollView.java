@@ -78,7 +78,9 @@ public class HorizontalScrollView extends ViewGroup {
         } else if (heightMeasureMode == MeasureSpec.AT_MOST) {
             View childView = getChildAt(0);
             setMeasuredDimension(widthMeasureSize, childView.getMeasuredHeight());
-        }else{
+        } else {
+
+
             View childView = getChildAt(0);
             setMeasuredDimension(childView.getMeasuredWidth() * childCount, childView.getMeasuredHeight());
         }
@@ -115,7 +117,7 @@ public class HorizontalScrollView extends ViewGroup {
                 int dy = y - mLastIntterceptY;
                 if (Math.abs(dx) > Math.abs(dy)) {
                     intercept = true;
-                }else{
+                } else {
                     intercept = false;
                 }
                 break;
@@ -157,8 +159,8 @@ public class HorizontalScrollView extends ViewGroup {
                     mChildIndex = (scrollX + mChildWidth / 2) / mChildWidth;
                 }
                 mChildIndex = Math.max(0, Math.min(mChildIndex, getChildCount() - 1));
-                Log.v("MYTAG","mChildIndex:"+mChildIndex);
                 int dx = mChildIndex * mChildWidth - scrollX;
+                Log.v("MYTAG", "mChildIndex:" + mChildIndex+":dx:"+dx);
                 smoothScrollBy(dx, 0);
                 mVelocityTracker.clear();
                 break;

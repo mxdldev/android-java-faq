@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mxdl.faq">
+    package="com.mxdl.faq">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".MyApplication"
@@ -14,33 +14,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.HorizontalScrollViewActivity">
-        </activity>
-        <activity android:name=".view.ViewPagerActivity">
-        </activity>
-        <activity android:name=".view.WindowTest">
-        </activity>
-        <activity android:name=".view.CricleActivity">
-        </activity>
-        <activity android:name=".view.PositionViewActivity">
-        </activity>
-        <activity android:name=".view.ScrollViewPagerActivity1">
-        </activity>
-        <activity android:name=".view.ScrollViewPagerActivity">
-        </activity>
-        <activity android:name=".preformance.StrictModeActivity">
-        </activity>
+        <activity android:name=".view.HorizontalScrollViewActivity2"></activity>
+        <activity android:name=".view.HorizontalScrollViewActivity"></activity>
+        <activity android:name=".view.ViewPagerActivity"></activity>
+        <activity android:name=".view.WindowTest"></activity>
+        <activity android:name=".view.CricleActivity"></activity>
+        <activity android:name=".view.PositionViewActivity"></activity>
+        <activity android:name=".view.ScrollViewPagerActivity1"></activity>
+        <activity android:name=".view.ScrollViewPagerActivity"></activity>
+        <activity android:name=".preformance.StrictModeActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <service
             android:name=".service.TestService"
-            android:permission="com.read.com"/>
+            android:permission="com.read.com" />
     </application>
 
 </manifest>

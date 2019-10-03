@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.mxdl.faq.view.CricleActivity;
 import com.mxdl.faq.view.HorizontalScrollView;
 import com.mxdl.faq.view.HorizontalScrollViewActivity;
+import com.mxdl.faq.view.HorizontalScrollViewActivity2;
 import com.mxdl.faq.view.PositionViewActivity;
 import com.mxdl.faq.view.ScrollViewPagerActivity;
 import com.mxdl.faq.view.ScrollViewPagerActivity1;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnWindow;
     private Button mBtnViewPager;
     private Button mBtnHorizontalView;
+    private Button mBtnHorizontalView1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnWindow = findViewById(R.id.btn_window);
         mBtnViewPager = findViewById(R.id.btn_viewpager);
         mBtnHorizontalView = findViewById(R.id.btn_horizontal_view);
+        mBtnHorizontalView1 = findViewById(R.id.btn_horizontal_view1);
 
         mBtnStrictMode.setOnClickListener(this);
         mBtnHuGo.setOnClickListener(this);
@@ -105,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnWindow.setOnClickListener(this);
         mBtnViewPager.setOnClickListener(this);
         mBtnHorizontalView.setOnClickListener(this);
+        mBtnHorizontalView1.setOnClickListener(this);
 
         new RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
@@ -184,6 +188,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_horizontal_view:
                 startActivity(new Intent(MainActivity.this, HorizontalScrollViewActivity.class));
+                break;
+            case R.id.btn_horizontal_view1:
+                startActivity(new Intent(MainActivity.this, HorizontalScrollViewActivity2.class));
                 break;
         }
     }

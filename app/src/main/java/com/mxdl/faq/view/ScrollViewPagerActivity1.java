@@ -63,15 +63,15 @@ public class ScrollViewPagerActivity1 extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "dispatchTouchEvent action:" + ev.getAction());
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, "onTouchEvent action:" + event.getAction());
-        return super.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        Log.d(TAG, "dispatchTouchEvent action:" + ev.getAction());
+//        return super.dispatchTouchEvent(ev);
+//    }
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        Log.d(TAG, "onTouchEvent action:" + event.getAction());
+//        return super.onTouchEvent(event);
+//    }
 }
