@@ -2,37 +2,28 @@ package com.mxdl.faq;
 
 import android.Manifest;
 import android.animation.IntEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.TypeEvaluator;
-import android.animation.ValueAnimator;
+import android.app.ExpandableListActivity;
 import android.content.Intent;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.NinePatchDrawable;
 import android.os.Debug;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mxdl.faq.view.CricleActivity;
-import com.mxdl.faq.view.HorizontalScrollView;
+import com.mxdl.faq.view.ExpendableListViewActivity;
 import com.mxdl.faq.view.HorizontalScrollViewActivity;
 import com.mxdl.faq.view.HorizontalScrollViewActivity2;
+import com.mxdl.faq.view.PinnedHeaderActivity;
 import com.mxdl.faq.view.PositionViewActivity;
 import com.mxdl.faq.view.ScrollViewPagerActivity;
 import com.mxdl.faq.view.ScrollViewPagerActivity1;
@@ -74,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnViewPager;
     private Button mBtnHorizontalView;
     private Button mBtnHorizontalView1;
+    private Button mBtnPinnedHead;
+    private Button mBtnExpandableListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnHandlerLeak = findViewById(R.id.btn_handelr_leak);
 
         mBtnMemoryShake = findViewById(R.id.btn_memory_shake);
-
         mBtnTraceView = findViewById(R.id.btn_trace_view);
         mTxtHello = findViewById(R.id.txt_hello);
         mBtnScroll = findViewById(R.id.btn_my_scroll);
@@ -95,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnViewPager = findViewById(R.id.btn_viewpager);
         mBtnHorizontalView = findViewById(R.id.btn_horizontal_view);
         mBtnHorizontalView1 = findViewById(R.id.btn_horizontal_view1);
+        mBtnPinnedHead = findViewById(R.id.btn_pinned_head);
+        mBtnExpandableListView = findViewById(R.id.btn_expandable_listview);
+
 
         mBtnStrictMode.setOnClickListener(this);
         mBtnHuGo.setOnClickListener(this);
@@ -109,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnViewPager.setOnClickListener(this);
         mBtnHorizontalView.setOnClickListener(this);
         mBtnHorizontalView1.setOnClickListener(this);
+        mBtnPinnedHead.setOnClickListener(this);
+        mBtnExpandableListView.setOnClickListener(this);
 
         new RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
@@ -191,6 +188,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_horizontal_view1:
                 startActivity(new Intent(MainActivity.this, HorizontalScrollViewActivity2.class));
+                break;
+            case R.id.btn_pinned_head:
+                startActivity(new Intent(MainActivity.this, PinnedHeaderActivity.class));
+                break;
+            case R.id.btn_expandable_listview:
+                startActivity(new Intent(MainActivity.this, ExpendableListViewActivity.class));
                 break;
         }
     }

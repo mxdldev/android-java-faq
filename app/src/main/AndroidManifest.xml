@@ -14,15 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.HorizontalScrollViewActivity2"></activity>
-        <activity android:name=".view.HorizontalScrollViewActivity"></activity>
-        <activity android:name=".view.ViewPagerActivity"></activity>
-        <activity android:name=".view.WindowTest"></activity>
-        <activity android:name=".view.CricleActivity"></activity>
-        <activity android:name=".view.PositionViewActivity"></activity>
-        <activity android:name=".view.ScrollViewPagerActivity1"></activity>
-        <activity android:name=".view.ScrollViewPagerActivity"></activity>
-        <activity android:name=".preformance.StrictModeActivity"></activity>
+        <activity android:name=".view.ExpendableListViewActivity"></activity>
+        <activity android:name=".view.PinnedHeaderActivity" />
+        <activity android:name=".view.HorizontalScrollViewActivity2" />
+        <activity android:name=".view.HorizontalScrollViewActivity" />
+        <activity android:name=".view.ViewPagerActivity" />
+        <activity android:name=".view.WindowTest" />
+        <activity android:name=".view.CricleActivity" />
+        <activity android:name=".view.PositionViewActivity" />
+        <activity android:name=".view.ScrollViewPagerActivity1" />
+        <activity android:name=".view.ScrollViewPagerActivity" />
+        <activity android:name=".preformance.StrictModeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

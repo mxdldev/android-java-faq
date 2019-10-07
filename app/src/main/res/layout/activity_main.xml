@@ -102,6 +102,20 @@
         android:text="自定义ViewPager1"
         android:textAllCaps="false"
         />
+    <Button
+        android:id="@+id/btn_pinned_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PinnedHeaderExpandableListView"
+        android:textAllCaps="false"
+        />
+    <Button
+        android:id="@+id/btn_expandable_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ExpandableListView"
+        android:textAllCaps="false"
+        />
     <TextView
         android:id="@+id/txt_hello"
         android:layout_width="200dp"
