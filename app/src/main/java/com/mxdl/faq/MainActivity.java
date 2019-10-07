@@ -19,6 +19,8 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mxdl.faq.art.PinnedHeaderExpandableListViewActivity;
+import com.mxdl.faq.art.adapter.MyExpandableListViewAdapter;
 import com.mxdl.faq.view.CricleActivity;
 import com.mxdl.faq.view.ExpendableListViewActivity;
 import com.mxdl.faq.view.HorizontalScrollViewActivity;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnHorizontalView1;
     private Button mBtnPinnedHead;
     private Button mBtnExpandableListView;
+    private Button mBtnMyExpandableListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnHorizontalView1 = findViewById(R.id.btn_horizontal_view1);
         mBtnPinnedHead = findViewById(R.id.btn_pinned_head);
         mBtnExpandableListView = findViewById(R.id.btn_expandable_listview);
+        mBtnMyExpandableListView = findViewById(R.id.btn_my_expandable_listview);
 
 
         mBtnStrictMode.setOnClickListener(this);
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnHorizontalView1.setOnClickListener(this);
         mBtnPinnedHead.setOnClickListener(this);
         mBtnExpandableListView.setOnClickListener(this);
+        mBtnMyExpandableListView.setOnClickListener(this);
 
         new RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
@@ -194,6 +199,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_expandable_listview:
                 startActivity(new Intent(MainActivity.this, ExpendableListViewActivity.class));
+                break;
+            case R.id.btn_my_expandable_listview:
+                startActivity(new Intent(MainActivity.this, PinnedHeaderExpandableListViewActivity.class));
                 break;
         }
     }

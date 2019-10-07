@@ -116,6 +116,13 @@
         android:text="ExpandableListView"
         android:textAllCaps="false"
         />
+    <Button
+        android:id="@+id/btn_my_expandable_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MyExpandableListView"
+        android:textAllCaps="false"
+        />
     <TextView
         android:id="@+id/txt_hello"
         android:layout_width="200dp"

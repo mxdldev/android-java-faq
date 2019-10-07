@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ExpendableListViewActivity"></activity>
+        <activity android:name=".art.PinnedHeaderExpandableListViewActivity"></activity>
+        <activity android:name=".view.ExpendableListViewActivity" />
         <activity android:name=".view.PinnedHeaderActivity" />
         <activity android:name=".view.HorizontalScrollViewActivity2" />
         <activity android:name=".view.HorizontalScrollViewActivity" />
