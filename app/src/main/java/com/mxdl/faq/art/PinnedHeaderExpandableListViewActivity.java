@@ -4,10 +4,12 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.mxdl.faq.R;
 import com.mxdl.faq.art.adapter.MyExpandableListViewAdapter;
 import com.mxdl.faq.art.view.MyPinnedHeaderExpandableListView;
+import com.mxdl.faq.art.view.StickyLayout;
 
 /**
  * Description: <PinnedHeaderExpandableListViewActivity><br>
@@ -19,6 +21,7 @@ import com.mxdl.faq.art.view.MyPinnedHeaderExpandableListView;
 public class PinnedHeaderExpandableListViewActivity extends AppCompatActivity {
 
     private MyPinnedHeaderExpandableListView mExpandableListView;
+    private StickyLayout mStickyLayout;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -32,6 +35,21 @@ public class PinnedHeaderExpandableListViewActivity extends AppCompatActivity {
             mExpandableListView.expandGroup(i);
         }
         mExpandableListView.showPinnedHeaderView();
+
+        mStickyLayout = findViewById(R.id.view_sticky_layout);
+        mStickyLayout.setGiveUpTouchEventListener(new StickyLayout.GiveUpTouchEventListener() {
+            @Override
+            public boolean giveUpTouchEvent() {
+                int firstVisiblePosition = mExpandableListView.getFirstVisiblePosition();
+                if(firstVisiblePosition == 0){
+                    View view = mExpandableListView.getChildAt(0);
+                    if(view != null && view.getTop() >= 0){
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
 
