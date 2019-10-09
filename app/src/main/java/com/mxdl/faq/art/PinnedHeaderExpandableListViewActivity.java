@@ -8,8 +8,8 @@ import android.view.View;
 
 import com.mxdl.faq.R;
 import com.mxdl.faq.art.adapter.MyExpandableListViewAdapter;
-import com.mxdl.faq.art.view.MyPinnedHeaderExpandableListView;
-import com.mxdl.faq.art.view.MyStickyLayout;
+import com.mxdl.faq.art.view1.MyPinnedHeaderExpandableListView;
+import com.mxdl.faq.art.view1.MyStickyLayout;
 
 /**
  * Description: <PinnedHeaderExpandableListViewActivity><br>
