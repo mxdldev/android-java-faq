@@ -9,7 +9,7 @@ import android.view.View;
 import com.mxdl.faq.R;
 import com.mxdl.faq.art.adapter.MyExpandableListViewAdapter;
 import com.mxdl.faq.art.view.MyPinnedHeaderExpandableListView;
-import com.mxdl.faq.art.view.StickyLayout;
+import com.mxdl.faq.art.view.MyStickyLayout;
 
 /**
  * Description: <PinnedHeaderExpandableListViewActivity><br>
@@ -21,7 +21,7 @@ import com.mxdl.faq.art.view.StickyLayout;
 public class PinnedHeaderExpandableListViewActivity extends AppCompatActivity {
 
     private MyPinnedHeaderExpandableListView mExpandableListView;
-    private StickyLayout mStickyLayout;
+    private MyStickyLayout mStickyLayout;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -37,7 +37,7 @@ public class PinnedHeaderExpandableListViewActivity extends AppCompatActivity {
         mExpandableListView.showPinnedHeaderView();
 
         mStickyLayout = findViewById(R.id.view_sticky_layout);
-        mStickyLayout.setGiveUpTouchEventListener(new StickyLayout.GiveUpTouchEventListener() {
+        mStickyLayout.setGiveUpTouchEventListener(new MyStickyLayout.GiveUpTouchEventListener() {
             @Override
             public boolean giveUpTouchEvent() {
                 int firstVisiblePosition = mExpandableListView.getFirstVisiblePosition();

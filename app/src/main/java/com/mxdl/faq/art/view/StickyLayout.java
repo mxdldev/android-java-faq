@@ -21,12 +21,13 @@ import android.widget.LinearLayout;
 public class StickyLayout extends LinearLayout {
 
     private View mHeaderView;
-    private View mContentView;
     private int mOriginHeaderHeight;
     private int mCurrHeaderHeight;
 
-    int mInterceptX = 0;
-    int mInterceptY = 0;
+    int mLastInterceptX = 0;
+    int mLastInterceptY = 0;
+    int mLastX = 0;
+    int mLastY = 0;
     private int mStatus = STATUS_EXPANDED;
     public static final int STATUS_EXPANDED = 1;
     public static final int STATUS_COLLAPSED = 2;
@@ -56,7 +57,7 @@ public class StickyLayout extends LinearLayout {
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus && (mHeaderView == null || mContentView == null)) {
+        if (hasWindowFocus && (mHeaderView == null)) {
             initView();
         }
     }
@@ -68,10 +69,8 @@ public class StickyLayout extends LinearLayout {
 
     public void initView() {
         int headerId = getResources().getIdentifier("sticky_header", "id", getContext().getPackageName());
-        int contentId = getResources().getIdentifier("sticky_content", "id", getContext().getPackageName());
-        if (headerId != 0 && contentId != 0) {
+        if (headerId != 0 ) {
             mHeaderView = findViewById(headerId);
-            mContentView = findViewById(contentId);
             mOriginHeaderHeight = mHeaderView.getMeasuredHeight();
             mCurrHeaderHeight = mOriginHeaderHeight;
             mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
@@ -87,33 +86,37 @@ public class StickyLayout extends LinearLayout {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 intercept = false;
+                mLastX = x;
+                mLastY = y;
+                mLastInterceptX = x;
+                mLastInterceptY = y;
                 break;
             case MotionEvent.ACTION_MOVE:
-                int dx = x - mInterceptX;
-                int dy = y - mInterceptY;
-                Log.v("MYTAG1","ACTION_MOVE y:"+y+";"+mCurrHeaderHeight);
+                int dx = x - mLastInterceptX;
+                int dy = y - mLastInterceptY;
+                Log.v("MYTAG1", "ACTION_MOVE y:" + y + ";" + mCurrHeaderHeight);
                 if (y <= mCurrHeaderHeight) {
                     intercept = false;
-                    Log.v("MYTAG1","case 1");
+                    Log.v("MYTAG1", "case 1");
                 } else if (Math.abs(dy) < Math.abs(dx)) {
-                    Log.v("MYTAG1","case 2");
+                    Log.v("MYTAG1", "case 2");
                     intercept = false;
                 } else if (mStatus == STATUS_EXPANDED && dy <= -mTouchSlop) {
-                    Log.v("MYTAG1","case 3");
+                    Log.v("MYTAG1", "case 3");
                     intercept = true;
                 } else if (mGiveUpTouchEventListener != null && mGiveUpTouchEventListener.giveUpTouchEvent() && dy >= mTouchSlop) {
-                    Log.v("MYTAG1","case 4");
+                    Log.v("MYTAG1", "case 4");
                     intercept = true;
+                }else{
+                    intercept = false;
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 intercept = false;
-                mInterceptX = 0;
-                mInterceptY = 0;
+                mLastInterceptX = 0;
+                mLastInterceptY = 0;
                 break;
         }
-        mInterceptX = x;
-        mInterceptY = y;
         return intercept;
     }
 
@@ -125,42 +128,36 @@ public class StickyLayout extends LinearLayout {
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
-                int dy = y - mInterceptY;
+                int dx = x - mLastX;
+                int dy = y - mLastY;
                 mCurrHeaderHeight += dy;
                 setHeaderHeight(mCurrHeaderHeight);
                 break;
             case MotionEvent.ACTION_UP:
-                int to = 0;
-                if(mCurrHeaderHeight > mOriginHeaderHeight * 0.5){
-                    to = mOriginHeaderHeight;
+                int destHeight = 0;
+                if (mCurrHeaderHeight <= mOriginHeaderHeight * 0.5) {
+                    destHeight = 0;
+                    mStatus = STATUS_COLLAPSED;
+                } else {
+                    destHeight = mOriginHeaderHeight;
+                    mStatus = STATUS_EXPANDED;
                 }
-                //smoothSetHeaderHeight(mCurrHeaderHeight,to,500);
-                smoothSetHeaderHeight1(mCurrHeaderHeight,to,500);
+                smoothSetHeaderHeight(mCurrHeaderHeight,destHeight,500);
+                //smoothSetHeaderHeight1(mCurrHeaderHeight, destHeight, 500);
                 break;
         }
-        mInterceptX = x;
-        mInterceptY = y;
+        mLastX = x;
+        mLastY = y;
         return super.onTouchEvent(event);
     }
-    public void smoothSetHeaderHeight(int from,int to,int duration){
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(from, to).setDuration(duration);
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                Log.v("MYTAG1","value:"+value+":"+Thread.currentThread().getName());
-                setHeaderHeight(value);
-            }
-        });
-        valueAnimator.start();
 
-    }
+
     private void setHeaderHeight(int height) {
         Log.v("MYTAG1", "mCurrHeaderHeight:" + height);
 
-        if(height < 0){
+        if (height < 0) {
             height = 0;
-        }else if(height >= mOriginHeaderHeight){
+        } else if (height >= mOriginHeaderHeight) {
             height = mOriginHeaderHeight;
         }
         if (height == 0) {
@@ -173,37 +170,45 @@ public class StickyLayout extends LinearLayout {
         mHeaderView.requestLayout();
     }
 
-    public void smoothSetHeaderHeight1(final int from, final int to, long duration) {
-        final int frameCount = (int) (duration / 1000f * 30) + 1;
-        final float partation = (to - from) / (float) frameCount;
-        new Thread("Thread#smoothSetHeaderHeight") {
-
+    public void smoothSetHeaderHeight1(final int from, final int to, int duration) {
+        final int framecount = duration / 1000 * 30 + 1;
+        final float partation = (to - from) / (float)framecount;
+        new Thread("smoothSetheaderHeight") {
             @Override
             public void run() {
-                for (int i = 0; i < frameCount; i++) {
+                for (int i = 0; i < framecount; i++) {
                     final int height;
-                    if (i == frameCount - 1) {
+                    if (i == framecount - 1) {
                         height = to;
-                    } else {
-                        height = (int) (from + partation * i);
+                    }else{
+                        height = (int)(from + partation * i);
                     }
                     post(new Runnable() {
+                        @Override
                         public void run() {
                             setHeaderHeight(height);
                         }
                     });
                     try {
-                        sleep(10);
-                    } catch (InterruptedException e) {
+                        Thread.sleep(10);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
-//                if (modifyOriginalHeaderHeight) {
-//                    setOriginalHeaderHeight(to);
-//                }
-            };
-
+            }
         }.start();
+    }
+
+    public void smoothSetHeaderHeight(int from, int to, int duration) {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(from, to).setDuration(duration);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                Log.v("MYTAG1", "value:" + value + ":" + Thread.currentThread().getName());
+                setHeaderHeight(value);
+            }
+        });
+        valueAnimator.start();
     }
 }
