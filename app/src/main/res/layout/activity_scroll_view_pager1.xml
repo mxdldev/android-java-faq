@@ -3,8 +3,8 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.mxdl.faq.view.HorizontalScrollViewEx2
+    <com.mxdl.faq.art.view1.MyHorizontalScorllView
         android:id="@+id/view_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"></com.mxdl.faq.art.view1.MyHorizontalScorllView>
 </LinearLayout>
